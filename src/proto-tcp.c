@@ -214,6 +214,16 @@ tcpcon_set_parameter(struct TCP_ConnectionTable *tcpcon,
         return;
     }
 
+    if (name_equals(name, "http-host")) {
+        banner_http.hello_length = http_change_field(
+                                (unsigned char**)&banner_http.hello,
+                                (unsigned)banner_http.hello_length,
+                                "Host:",
+                                (const unsigned char *)value,
+                                (unsigned)value_length);
+        return;
+    }
+
     if (name_equals(name, "timeout") || name_equals(name, "connection-timeout")) {
         uint64_t n = parseInt(value, value_length);
         tcpcon->timeout_connection = (unsigned)n;

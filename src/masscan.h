@@ -340,8 +340,10 @@ struct Masscan
 
     unsigned char *http_user_agent;
     unsigned http_user_agent_length;
+    unsigned char *http_host;
+    unsigned http_host_length;
     unsigned tcp_connection_timeout;
-    
+
     /** Number of seconds to wait for a 'hello' from the server before
      * giving up and sending a 'hello' from the client. Should be a small
      * value when doing scans that expect client-side hellos, like HTTP or

@@ -407,6 +407,11 @@ masscan_echo(struct Masscan *masscan, FILE *fp)
                 "http-user-agent = %.*s\n",
                 masscan->http_user_agent_length,
                 masscan->http_user_agent);
+    if (masscan->http_host)
+        fprintf(    fp,
+                "http-host = %.*s\n",
+                masscan->http_host_length,
+                masscan->http_host);
 
     for (i=0; i<sizeof(masscan->http_headers)/sizeof(masscan->http_headers[0]); i++) {
         if (masscan->http_headers[i].header_name == 0)
@@ -1236,6 +1241,15 @@ masscan_set_parameter(struct Masscan *masscan,
         memcpy( masscan->http_user_agent,
                 value,
                 masscan->http_user_agent_length+1
+                );
+    } else if (EQUALS("http-host", name)) {
+        if (masscan->http_host)
+            free(masscan->http_host);
+        masscan->http_host_length = (unsigned)strlen(value);
+        masscan->http_host = (unsigned char *)malloc(masscan->http_host_length+1);
+        memcpy( masscan->http_host,
+                value,
+                masscan->http_host_length+1
                 );
     } else if (memcmp("http-header", name, 11) == 0) {
         unsigned j;

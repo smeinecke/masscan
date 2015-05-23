@@ -618,6 +618,11 @@ receive_thread(void *v)
                                     "http-user-agent",
                                     masscan->http_user_agent_length,
                                     masscan->http_user_agent);
+        if (masscan->http_host_length)
+            tcpcon_set_parameter(   tcpcon,
+                                    "http-host",
+                                    masscan->http_host_length,
+                                    masscan->http_host);
         if (masscan->is_heartbleed)
             tcpcon_set_parameter(   tcpcon,
                                  "heartbleed",
